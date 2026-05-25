@@ -3,24 +3,15 @@ from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from dotenv import load_dotenv
+import os
 import csv
 
-'''
-Red underlines? Install the required packages first: 
-Open the Terminal in PyCharm (bottom left). 
-
-On Windows type:
-python -m pip install -r requirements.txt
-
-On MacOS type:
-pip3 install -r requirements.txt
-
-This will install the packages from requirements.txt for this project.
-'''
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-Bootstrap5(app)
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+bootstrap = Bootstrap5(app)
 
 
 class CafeForm(FlaskForm):
@@ -60,6 +51,8 @@ def cafes():
         list_of_rows = []
         for row in csv_data:
             list_of_rows.append(row)
+
+    print(list_of_rows)
     return render_template('cafes.html', cafes=list_of_rows)
 
 
